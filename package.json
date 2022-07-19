@@ -1,0 +1,37 @@
+{
+  "name": "web3-events-db",
+  "version": "0.0.1",
+  "description": "Easily store web3 events to a database of your choice without the normal painful scaffolding.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/moontography/web3-events-db"
+  },
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "prepublish": "npm run build",
+    "test": "mocha --require ts-node/register --recursive './src/**/*.spec.ts'"
+  },
+  "author": "Lance Whatley <lance@moontography.com>",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "dotenv": "^16.0.1",
+    "ethereum-input-data-decoder": "^0.4.1",
+    "mongodb": "^4.8.0",
+    "pg": "^8.7.3",
+    "web3": "^1.7.4"
+  },
+  "devDependencies": {
+    "@types/mocha": "^9.1.1",
+    "@types/node": "^14.14.8",
+    "@types/pg": "^8.6.5",
+    "mocha": "^10.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.0.5"
+  },
+  "keywords": [
+    "blockchain",
+    "web3"
+  ]
+}
