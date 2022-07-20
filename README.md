@@ -18,7 +18,8 @@ Please add an [issue](https://github.com/moontography/web3-events-db/issues) for
 
 ## Usage
 
-See [Examples](https://github.com/moontography/web3-events-db/blob/master/src/examples) for good small
+We will build out detailed API docs over time. In the meantime, review the below examples and
+see [Examples](https://github.com/moontography/web3-events-db/blob/master/src/examples) for good small
 example scripts to get you started.
 
 ### Example 1: BSC verified contract to PostgreSQL DB
@@ -45,11 +46,31 @@ const readerWriter = Web3EventsDb({
 await readerWriter.start()
 ```
 
-### Example 2: BSC contract w/ custom passed ABI to PostgreSQL DB
+### Example 2: BSC verified contract to MongoDB
 
-TODO
+```ts
+import web3EventsDb from 'web3-events-db'
 
-### Example 3: BSC verified contract to MongoDB
+// listen for events for a bscscan verified BSC contract and populate a MongoDB database
+// listening on localhost and in default table `Predict_web3_events_db` (`${eventName}_web3_events_db`)
+const readerWriter = Web3EventsDb({
+  db: {
+    type: 'mongo',
+    connectionString: 'mongodb://localhost/?retryWrites=true&w=majority',
+  },
+  contract: {
+    network: 'bsc',
+    blockExplorerApiKey: process.env.BSCSCAN_API_KEY,
+    wsRpc: `wss://mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
+    contract: '0x20D0a1831c0F5071904a5EC511423564793bf620',
+    eventName: 'Predict',
+  },
+  recordCallback: (record) => console.log('got a record', record),
+})
+await readerWriter.start()
+```
+
+### Example 3: BSC contract w/ custom passed ABI to PostgreSQL DB
 
 TODO
 
