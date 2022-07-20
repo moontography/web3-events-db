@@ -1,6 +1,6 @@
 {
   "name": "web3-events-db",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Easily store web3 events to a database of your choice without the normal painful scaffolding.",
   "repository": {
     "type": "git",
