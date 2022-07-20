@@ -9,7 +9,7 @@ import { IDatabaseConnector } from './libs/connectors/IDatabaseConnector'
 interface Db {
   raw?: IDatabaseConnector // custom connector to use to store event data to (NO OTHER OPTIONS BELOW ARE USED IF THIS IS PROVIDED)
   type?: ConnectorType // built-in connector type
-  tableName?: string // override DB name to populate in connector provided
+  tableName?: string // override DB table name to populate in connector provided
   connectionString?: string // connecting string for built-in connector
   extraConfig?: IStringMap // any extra configuration to add to a built-in connector connection
 }

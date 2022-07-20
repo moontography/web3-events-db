@@ -19,7 +19,7 @@ export default function Postgres(
 
   return {
     async writeRecord(eventName: string, record: IStringMap) {
-      const table = tableName || `${eventName}_web3_events_db`
+      const table = tableName || `"${eventName}_web3_events_db"`
       const exists = await doesTableExist(pool, table)
       if (!exists) {
         const columnsAndTypes = Object.keys(record).reduce(

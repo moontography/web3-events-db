@@ -26,9 +26,8 @@ example scripts to get you started.
 ```ts
 import web3EventsDb from 'web3-events-db'
 
-// listen for events for a contract on BSC that's verified on bscscan
-// and populate a postgres database listening on localhost database `web3`
-// and in table `Predict_web3_events_db` (the default table if one is not overriden)
+// listen for events for a bscscan verified BSC contract and populate a postgres database
+// listening on localhost and in default table `Predict_web3_events_db` (`${eventName}_web3_events_db`)
 const readerWriter = Web3EventsDb({
   db: {
     type: 'postgres',
