@@ -44,7 +44,7 @@ const readerWriter = Web3EventsDb({
   contract: {
     network: 'bsc',
     blockExplorerApiKey: process.env.BSCSCAN_API_KEY,
-    wsRpc: `wss://mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
+    wsRpc: `wss://apis-sj.ankr.com/wss/${process.env.ANKR_INSTANCE}/${process.env.ANKR_API_KEY}/binance/full/main`,
     contract: '0x20D0a1831c0F5071904a5EC511423564793bf620',
     eventName: 'Predict',
   },
