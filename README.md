@@ -9,6 +9,13 @@ of your choice without doing all the painful scaffolding.
 $ npm install -s web3-events-db
 ```
 
+## Built-in Database Connectors
+
+Please add an [issue](https://github.com/moontography/web3-events-db/issues) for any common, modern DB you'd like us to support with a built-in connector.
+
+- PostgreSQL
+- MongoDB
+
 ## Usage
 
 See [Examples](https://github.com/moontography/web3-events-db/blob/master/src/examples) for good small
@@ -48,6 +55,10 @@ TODO
 TODO
 
 ### Example 3: BSC verified contract to PostgreSQL DB with overriden table name
+
+TODO
+
+### Example 3: BSC verified contract to custom DB connector
 
 TODO
 
