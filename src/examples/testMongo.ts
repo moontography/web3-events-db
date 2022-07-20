@@ -16,7 +16,7 @@ import Web3EventsDb from '../'
       contract: '0x2bf6267c4997548d8de56087e5d48bdccb877e77',
       eventName: 'InitiatedCoinFlip',
     },
-    onData: (record) => console.log('got a record', record),
+    recordCallback: (record) => console.log('got a record', record),
   })
   await eventReaderWriter.start()
 })()

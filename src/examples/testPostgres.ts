@@ -16,7 +16,7 @@ import Web3EventsDb from '../'
       contract: '0x20D0a1831c0F5071904a5EC511423564793bf620',
       eventName: 'Predict',
     },
-    onData: (record) => console.log('got a record', record),
+    recordCallback: (record) => console.log('got a record', record),
   })
   await eventReaderWriter.start()
 })()

@@ -3,21 +3,28 @@ import ContractEventReader, {
   IContractEventReaderOptionsOptional,
 } from './libs/ContractEventReader'
 import BuiltInConnectors, { ConnectorType } from './libs/connectors'
+import { IStringMap } from './libs/connectors/IDatabaseConnector'
 import { IDatabaseConnector } from './libs/connectors/IDatabaseConnector'
 
 interface Db {
   raw?: IDatabaseConnector
   type?: ConnectorType
+  tableName?: string
   connectionString?: string
+  extraConfig?: IStringMap
 }
 
 interface Options {
   db: Db
   contract: IContractEventReaderOptionsOptional
-  onData?: (record: string) => void | Promise<void>
+  recordCallback?: (record: IStringMap) => void | Promise<void>
 }
 
-export default function Web3EventsDb({ db, contract, onData }: Options) {
+export default function Web3EventsDb({
+  db,
+  contract,
+  recordCallback,
+}: Options) {
   let connector: IDatabaseConnector
   if (db.raw) {
     connector = db.raw
@@ -26,7 +33,11 @@ export default function Web3EventsDb({ db, contract, onData }: Options) {
       db.type && db.connectionString,
       'must have raw connector or built-in connector configuration'
     )
-    connector = BuiltInConnectors[db.type](db.connectionString)
+    connector = BuiltInConnectors[db.type](
+      db.connectionString,
+      db.tableName,
+      db.extraConfig
+    )
   }
 
   const reader = ContractEventReader({
@@ -37,8 +48,8 @@ export default function Web3EventsDb({ db, contract, onData }: Options) {
         .filter((col) => isNaN(parseInt(col)))
         .reduce((obj, col) => ({ ...obj, [col]: fieldValues[col] }), {})
       await connector.writeRecord(contract.eventName, sanitizedRecord)
-      if (onData) {
-        await onData(record)
+      if (recordCallback) {
+        await recordCallback(record)
       }
     },
   })

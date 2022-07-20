@@ -3,6 +3,7 @@ import { IDatabaseConnector, IStringMap } from './IDatabaseConnector'
 
 export default function Postgres(
   connectionString: string,
+  tableName?: null | string,
   extraOptions?: PoolConfig
 ): IDatabaseConnector {
   const connConfig: PoolConfig = {
@@ -18,14 +19,14 @@ export default function Postgres(
 
   return {
     async writeRecord(eventName: string, record: IStringMap) {
-      const tableName = `${eventName}_web3_events_db`
-      const exists = await doesTableExist(pool, tableName)
+      const table = tableName || `${eventName}_web3_events_db`
+      const exists = await doesTableExist(pool, table)
       if (!exists) {
         const columnsAndTypes = Object.keys(record).reduce(
           (obj, col) => ({ ...obj, [col]: 'VARCHAR(255)' }),
           {}
         )
-        await createTable(pool, tableName, columnsAndTypes)
+        await createTable(pool, table, columnsAndTypes)
       }
       const standardColReplacer = (col: string) => {
         return col
@@ -36,7 +37,7 @@ export default function Postgres(
 
       await query(
         pool,
-        `INSERT INTO ${tableName.replace(/'/g, "''")}
+        `INSERT INTO ${table.replace(/'/g, "''")}
         ("${Object.keys(record)
           .map((col) => standardColReplacer(col).replace(/'/g, "''"))
           .join('", "')}")

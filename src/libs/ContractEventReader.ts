@@ -1,5 +1,3 @@
-require('dotenv').config()
-
 import assert from 'assert'
 import Web3 from 'web3'
 import { AbiItem } from 'web3-utils'
@@ -27,16 +25,16 @@ type onError = (
 ) => void
 
 export interface IContractEventReaderOptionsOptional {
-  network?: 'eth' | 'bsc' | 'polygon' | 'avax'
-  blockExplorerApiKey?: string
-  wsRpc: string
-  contract: string
-  contractAbi?: AbiItem[]
-  eventName: string
-  onConnect?: onConnect
-  onData?: onData
-  onError?: onError
-  onChanged?: onChanged
+  network?: 'eth' | 'bsc' | 'polygon' | 'avax' // only needed to support fetching ABI for verified contracts on chain-supported block exporer
+  blockExplorerApiKey?: string // only needed if `network` above has a supported block explorer we can fetch verified contract's ABIs for
+  wsRpc: string // web-socket RPC connection string to connect for Web3 instance
+  contract: string // contract address: 0x...
+  contractAbi?: AbiItem[] // custom/manual ABI, only needed if contract is not verified and/or network above is not supported for verified contract ABI fetching
+  eventName: string // the contract event we're listening for events for
+  onConnect?: onConnect // callback to execute on event listener connection
+  onData?: onData // callback to execute on event listener record coming through
+  onError?: onError // callback to execute on event listener error
+  onChanged?: onChanged // callback to execute on event listener change
 }
 
 export type IContractEventReaderOptions =
@@ -47,8 +45,6 @@ export type IContractEventReaderOptions =
 export default function ContractEventReader(
   opts: IContractEventReaderOptionsOptional
 ) {
-  const NOOP: any = () => {}
-
   return {
     web3: new Web3(),
     abi: opts.contractAbi,
